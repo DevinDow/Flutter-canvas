@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'face_painter.dart';
@@ -57,6 +59,46 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int minStep = 10;
+  int maxStep = 40;
+  late int step;
+  bool increasing = true;
+
+  late final Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    step = minStep;
+
+    _timer = Timer.periodic(const Duration(milliseconds: 30), (_) {
+      setState(() {
+        if (increasing) {
+          if (step >= maxStep) {
+            increasing = false;
+          }
+        } else {
+          if (step <= minStep) {
+            increasing = true;
+          }
+        }
+
+        if (increasing) {
+          step++;
+        } else {
+          step--;
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -73,13 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title + " " + step.toString()),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
           color: Colors.white,
           // Inner yellow container
           child: Container(
@@ -90,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: constraints.widthConstraints().maxWidth,
                 height: constraints.heightConstraints().maxHeight,
                 color: Colors.yellow,
-                child: CustomPaint(painter: FacePainter()),
+                child: CustomPaint(painter: FacePainter(step)),
               ),
             ),
           ),
