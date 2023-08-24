@@ -23,17 +23,17 @@ class FacePainter extends CustomPainter {
       paint,
     );
     // Mouth
-    final mouth = Path();
-    mouth.moveTo(size.width * 0.8, size.height * 0.6);
-    mouth.arcToPoint(
-      Offset(size.width * 0.2, size.height * 0.6),
-      radius: const Radius.circular(150),
-    );
-    mouth.arcToPoint(
-      Offset(size.width * 0.8, size.height * 0.6),
-      radius: const Radius.circular(200),
-      clockwise: false,
-    );
+    final mouth = Path()
+      ..moveTo(size.width * 0.8, size.height * 0.6)
+      ..arcToPoint(
+        Offset(size.width * 0.2, size.height * 0.6),
+        radius: const Radius.circular(150),
+      )
+      ..arcToPoint(
+        Offset(size.width * 0.8, size.height * 0.6),
+        radius: const Radius.circular(200),
+        clockwise: false,
+      );
 
     canvas.drawPath(mouth, paint);
   }
