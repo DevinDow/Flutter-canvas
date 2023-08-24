@@ -17,24 +17,21 @@ class FacePainter extends CustomPainter {
       ),
       paint,
     );
+
     // Right eye
     canvas.drawOval(
       Rect.fromLTWH(size.width - 120, 40, 100, 100),
       paint,
     );
-    // Mouth
-    final mouth = Path()
-      ..moveTo(size.width * 0.8, size.height * 0.6)
-      ..arcToPoint(
-        Offset(size.width * 0.2, size.height * 0.6),
-        radius: const Radius.circular(150),
-      )
-      ..arcToPoint(
-        Offset(size.width * 0.8, size.height * 0.6),
-        radius: const Radius.circular(200),
-        clockwise: false,
-      );
 
+    // Mouth
+    var y = size.height * 0.6;
+    var left = size.width * 0.2;
+    var right = size.width * 0.8;
+    final mouth = Path()
+      ..moveTo(left, y)
+      ..cubicTo(left + 50, y + 50, right - 50, y + 50, right, y)
+      ..cubicTo(right - 100, y + 150, left + 100, y + 150, left, y);
     canvas.drawPath(mouth, paint);
   }
 
