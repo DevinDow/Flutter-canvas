@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Drawing a Face on a Canvas'),
     );
   }
 }
@@ -95,9 +95,58 @@ class _MyHomePageState extends State<MyHomePage> {
           // Inner yellow container
           child: Container(
             color: Colors.yellow,
+            child: LayoutBuilder(
+              // Inner yellow container
+              builder: (_, constraints) => Container(
+                width: constraints.widthConstraints().maxWidth,
+                height: constraints.heightConstraints().maxHeight,
+                color: Colors.yellow,
+                child: CustomPaint(painter: FaceOutlinePainter()),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+class FaceOutlinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4.0
+      ..style = PaintingStyle.fill
+      ..color = Colors.indigo;
+
+    // Left eye
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+          Rect.fromLTWH(20, 40, 100, 100), Radius.circular(20)),
+      paint,
+    );
+    // Right eye
+    canvas.drawOval(
+      Rect.fromLTWH(size.width - 120, 40, 100, 100),
+      paint,
+    );
+    // Mouth
+    final mouth = Path();
+    mouth.moveTo(size.width * 0.8, size.height * 0.6);
+    mouth.arcToPoint(
+      Offset(size.width * 0.2, size.height * 0.6),
+      radius: Radius.circular(150),
+    );
+    mouth.arcToPoint(
+      Offset(size.width * 0.8, size.height * 0.6),
+      radius: Radius.circular(200),
+      clockwise: false,
+    );
+
+    canvas.drawPath(mouth, paint);
+  }
+
+  @override
+  bool shouldRepaint(FaceOutlinePainter oldDelegate) => false;
 }
