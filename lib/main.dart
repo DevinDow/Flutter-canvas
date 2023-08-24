@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: constraints.widthConstraints().maxWidth,
                 height: constraints.heightConstraints().maxHeight,
                 color: Colors.yellow,
-                child: CustomPaint(painter: FaceOutlinePainter()),
+                child: CustomPaint(painter: FacePainter()),
               ),
             ),
           ),
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class FaceOutlinePainter extends CustomPainter {
+class FacePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
