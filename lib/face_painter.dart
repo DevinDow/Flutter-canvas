@@ -12,7 +12,9 @@ class FacePainter extends CustomPainter {
     // Left eye
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-          Rect.fromLTWH(20, 40, 100, 100), Radius.circular(20)),
+        const Rect.fromLTWH(20, 40, 100, 100),
+        const Radius.circular(20),
+      ),
       paint,
     );
     // Right eye
@@ -25,11 +27,11 @@ class FacePainter extends CustomPainter {
     mouth.moveTo(size.width * 0.8, size.height * 0.6);
     mouth.arcToPoint(
       Offset(size.width * 0.2, size.height * 0.6),
-      radius: Radius.circular(150),
+      radius: const Radius.circular(150),
     );
     mouth.arcToPoint(
       Offset(size.width * 0.8, size.height * 0.6),
-      radius: Radius.circular(200),
+      radius: const Radius.circular(200),
       clockwise: false,
     );
 
